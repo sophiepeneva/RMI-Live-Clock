@@ -10,23 +10,23 @@ public class Time {
     private int minutes;
     private int seconds;
 
-    public void setCurrentTime(){
+    public void setCurrentTime() {
         LocalTime localTime = LocalTime.now();
         setHour(localTime.getHour());
         setMinutes(localTime.getMinute());
         setSeconds(localTime.getSecond());
     }
 
-    public void tickSeconds(){
+    public void tickSeconds() {
         seconds++;
-        if(seconds==60){
+        if (seconds == 60) {
             seconds = 0;
             minutes++;
-            if(minutes==60){
+            if (minutes == 60) {
                 minutes = 0;
                 hour++;
-                if(hour==24){
-                    hour=0;
+                if (hour == 24) {
+                    hour = 0;
                 }
             }
         }
@@ -75,6 +75,12 @@ public class Time {
     public void setHour(int hour) {
         if (hour >= 0 && hour < 24) {
             this.hour = hour + timeZone;
+            if (this.hour < 0) {
+                this.hour += 24;
+            }
+            if(this.hour>23){
+                this.hour-=24;
+            }
         }
     }
 
@@ -102,9 +108,9 @@ public class Time {
     public String toString() {
         String time = (hour > 9) ? (hour + ":") : ("0" + hour + ":");
         time += (minutes > 9) ? (minutes + ":") : ("0" + minutes + ":");
-        time += (seconds > 9) ? (seconds+ ": TZ:") : ("0" + seconds + ": TZ:");
-        if(timeZone<0)time+="-";
-        time += (Math.abs(timeZone)>9) ? (Math.abs(timeZone) + "") : ("0" + Math.abs(timeZone));
+        time += (seconds > 9) ? (seconds + ": TZ:") : ("0" + seconds + ": TZ:");
+        time += (timeZone < 0) ? "-" : "+";
+        time += (Math.abs(timeZone) > 9) ? (Math.abs(timeZone) + "") : ("0" + Math.abs(timeZone));
         return time;
     }
 }
